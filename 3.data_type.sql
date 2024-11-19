@@ -38,5 +38,36 @@ ex) select * from author where id>=2 and id<=4;
     = select * from author where id in(2,3,4);
     = select * from author where id not in(1,5); -- 전체 데이터가 1~5 일 경우
     
+-- 특정 문자를 포함하는 데이터를 조회하기 위해 사용하는 키워드
+ex) select * from post where title like '%n';
+    select * from post where title like '%h%';
 
 
+-- 정규표현식을 활용한 조회
+ex) select * from post where title regexp '[a-z]' \\하나라도 알파벳이 포함 되어 있으면
+    select * from post where title regexp '[가-힣]' \\하나라도 한글이 포함 되어 있으면
+
+-- 날짜변환 [cast, convert] : 숫자->날짜, 날짜->숫자
+-- 문자->숫자, 숫자->문자
+
+ex) select cast(20241119 as date);
+    select cast('20241119' as date);
+    select convert(20241119, date);
+    select convert('20241119', date);
+    select cast('12' as unsighed);
+
+    cast(date_format(created_time, '%H') as unsigned);
+    \\ datetime(yy-MM-dd HH-mm-ss)에서 시간만 문자열로 출력함
+    select * from post where cast(date_format(created_time, '%H') as unsigned) <=18;
+
+-- 날짜 조회 방법
+-- like패턴, 부등호 활용, date_format
+ex) select * from post where created_time like '2024%';  \\문자열처럼 조회
+    select * from post where created_time >='2024-01-01' and created_time < '2025-01-01';
+    select date_format(created_time, '%Y-%m-%d') from post;
+    select date_format(created_time, '%H:%i:%s') from post;
+    select * from post where date_format(created_time, '%Y')='2024';
+    select * from post where cast(date_format(created_time, '%Y')='2024' as unsigned)=2024
+
+-- 오늘 현재 시간
+select now();
