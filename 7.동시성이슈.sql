@@ -17,7 +17,7 @@ insert into author(email) values(fdfdfdfd);
 
 
 -- repeatable read에서 발생할 수 있는 lost update 실습
--- lost update 해결을 위한 베타적 lock
+-- lost update 해결을 위한 베타 lock
 -아래 코드는 workbench에서 실행
 start transaction;
 select post_count from author where id = 1 for update;
